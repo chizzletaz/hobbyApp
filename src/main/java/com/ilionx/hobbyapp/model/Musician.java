@@ -7,6 +7,14 @@ import javax.persistence.Id;
 
 @Entity
 public class Musician {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    private String name;
+    private int age;
+    private String instrument;
+
 
     public long getId() {
         return id;
@@ -35,13 +43,5 @@ public class Musician {
     public void setInstrument(String instrument) {
         this.instrument = instrument;
     }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    private String name;
-    private int age;
-    private String instrument;
 
 }

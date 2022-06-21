@@ -31,7 +31,7 @@ public class HobbyController {
         }
     }
 
-    @PostMapping("{id}")
+    @PostMapping
     public Musician create(@RequestBody Musician musician) {
         return this.hobbyService.save(musician);
     }
