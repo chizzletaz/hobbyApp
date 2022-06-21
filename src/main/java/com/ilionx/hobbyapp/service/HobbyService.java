@@ -3,10 +3,9 @@ package com.ilionx.hobbyapp.service;
 import com.ilionx.hobbyapp.model.Musician;
 import com.ilionx.hobbyapp.persistance.HobbyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +23,8 @@ public class HobbyService {
         return hobbyRepository.findAll(sort);
     }
 
+
+    @Transactional
     public Musician save(Musician entity) {
         return hobbyRepository.save(entity);
     }
@@ -32,13 +33,31 @@ public class HobbyService {
         return hobbyRepository.findById(aLong);
     }
 
-
     public long count() {
         return hobbyRepository.count();
     }
 
-    public void deleteById(Long aLong) {
-        hobbyRepository.deleteById(aLong);
+
+    @Transactional
+    public Musician updateByID(long id, Musician source) {
+        Optional<Musician> optionalMusician = findById(id);
+        if (optionalMusician.isPresent()) {
+            Musician target = optionalMusician.get();
+            target.setName(source.getName());
+            target.setAge(source.getAge());
+            target.setInstrument(source.getInstrument());
+
+            return save(target);
+        } else {
+            return null;
+        }
     }
 
+    @Transactional
+    public void deleteByID(long id) {
+        Optional<Musician> optionalMusician = findById(id);
+        if(optionalMusician.isPresent()) {
+            hobbyRepository.deleteById(id);
+        }
+    }
 }

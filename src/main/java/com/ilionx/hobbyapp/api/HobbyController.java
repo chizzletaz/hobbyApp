@@ -3,6 +3,7 @@ package com.ilionx.hobbyapp.api;
 import com.ilionx.hobbyapp.model.Musician;
 import com.ilionx.hobbyapp.service.HobbyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,24 +39,11 @@ public class HobbyController {
 
     @PutMapping("{id}")
     public Musician updateById(@PathVariable long id, @RequestBody Musician source) {
-        Optional<Musician> optionalMusician = this.hobbyService.findById(id);
-        if (optionalMusician.isPresent()) {
-            Musician target = optionalMusician.get();
-            target.setName(source.getName());
-            target.setAge(source.getAge());
-            target.setInstrument(source.getInstrument());
-
-            return this.hobbyService.save(target);
-        } else {
-            return null;
-        }
+        return hobbyService.updateByID(id, source);
     }
 
     @DeleteMapping("{id}")
     public void deleteById(@PathVariable long id) {
-        Optional<Musician> optionalMusician = this.hobbyService.findById(id);
-        if(optionalMusician.isPresent()) {
-            this.hobbyService.deleteById(id);
-        }
+        hobbyService.deleteByID(id);
     }
 }
