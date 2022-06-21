@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.ilionx</groupId>
 	<artifactId>hobbyapp</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.0-SNAPSHOT</version>
 	<name>hobbyapp</name>
 	<description>HobbyApp Project</description>
 	<properties>
