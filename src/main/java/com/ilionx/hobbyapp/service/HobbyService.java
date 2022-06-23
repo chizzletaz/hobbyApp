@@ -19,10 +19,6 @@ public class HobbyService {
         return hobbyRepository.findAll();
     }
 
-    public List<Musician> findAll(Sort sort) {
-        return hobbyRepository.findAll(sort);
-    }
-
 
     @Transactional
     public Musician save(Musician entity) {
@@ -41,23 +37,17 @@ public class HobbyService {
     @Transactional
     public Musician updateByID(long id, Musician source) {
         Optional<Musician> optionalMusician = findById(id);
-        if (optionalMusician.isPresent()) {
             Musician target = optionalMusician.get();
             target.setName(source.getName());
             target.setAge(source.getAge());
             target.setInstrument(source.getInstrument());
 
             return save(target);
-        } else {
-            return null;
-        }
     }
 
     @Transactional
     public void deleteByID(long id) {
         Optional<Musician> optionalMusician = findById(id);
-        if(optionalMusician.isPresent()) {
             hobbyRepository.deleteById(id);
-        }
     }
 }

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin
@@ -28,7 +27,7 @@ public class HobbyController {
         if (optionalMusician.isPresent()) {
             return ResponseEntity.ok(optionalMusician.get());
         } else {
-            return null;
+            return ResponseEntity.notFound().build();
         }
     }
 
@@ -39,12 +38,22 @@ public class HobbyController {
 
     @PutMapping("{id}")
     public ResponseEntity<Musician> updateById(@PathVariable long id, @RequestBody Musician source) {
-        return ResponseEntity.ok(hobbyService.updateByID(id, source));
+        Optional<Musician> optionalMusician = this.hobbyService.findById(id);
+        if(optionalMusician.isPresent()) {
+            return ResponseEntity.ok(hobbyService.updateByID(id, source));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteById(@PathVariable long id) {
-        this.hobbyService.deleteByID(id);
-        return ResponseEntity.noContent().build();
+        Optional<Musician> optionalMusician = this.hobbyService.findById(id);
+        if (optionalMusician.isPresent()) {
+            this.hobbyService.deleteByID(id);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
