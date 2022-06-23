@@ -10,9 +10,10 @@ import java.util.Optional;
 
 @CrossOrigin
 @RestController
-@RequestMapping("api/hobbies")
+@RequestMapping(HobbyController.url)
 public class HobbyController {
 
+    public static final String url = "/api/hobbies";
     @Autowired
     private HobbyService hobbyService;
 
